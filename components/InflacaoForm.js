@@ -1,6 +1,16 @@
 import React, { useState } from 'react';
-import { View, Text, TextInput, Button, StyleSheet, Alert, KeyboardAvoidingView, Platform } from 'react-native';
+import {
+  View,
+  Text,
+  TextInput,
+  StyleSheet,
+  Alert,
+  KeyboardAvoidingView,
+  Platform,
+} from 'react-native';
 import { calcularInflacao } from '../utils/calcularInflacao';
+import CustomButton from './CustomButton';
+import { colors } from '../theme';
 
 export default function InflacaoForm() {
   const [valorAtual, setValorAtual] = useState('');
@@ -35,7 +45,10 @@ export default function InflacaoForm() {
   };
 
   return (
-    <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : undefined}>
+    <KeyboardAvoidingView
+      behavior={Platform.OS === 'ios' ? 'padding' : undefined}
+      style={styles.container}
+    >
       <View style={styles.form}>
         <Text style={styles.label}>Valor Atual (R$):</Text>
         <TextInput
@@ -43,6 +56,8 @@ export default function InflacaoForm() {
           keyboardType="numeric"
           value={valorAtual}
           onChangeText={setValorAtual}
+          placeholder="Ex: 1000"
+          placeholderTextColor="#999"
         />
 
         <Text style={styles.label}>Taxa de Inflação Anual (%):</Text>
@@ -51,6 +66,8 @@ export default function InflacaoForm() {
           keyboardType="numeric"
           value={taxaInflacao}
           onChangeText={setTaxaInflacao}
+          placeholder="Ex: 4.5"
+          placeholderTextColor="#999"
         />
 
         <Text style={styles.label}>Tempo (anos):</Text>
@@ -59,17 +76,21 @@ export default function InflacaoForm() {
           keyboardType="numeric"
           value={tempoAnos}
           onChangeText={setTempoAnos}
+          placeholder="Ex: 5"
+          placeholderTextColor="#999"
         />
 
-        <Button title="Calcular" onPress={handleCalcular} />
+        <CustomButton title="Calcular" onPress={handleCalcular} />
 
         {resultado && (
           <View style={styles.resultado}>
-            <Text style={styles.resultadoTexto}>Valor Futuro Corrigido: R$ {resultado.valorFuturo}</Text>
-            <Text style={styles.resultadoTexto}>Perda de Poder de Compra: R$ {resultado.perdaPoderCompra}</Text>
-            <View style={{ marginTop: 10 }}>
-              <Button title="Limpar" onPress={handleLimpar} color="#999" />
-            </View>
+            <Text style={styles.resultadoTexto}>
+              Valor Futuro Corrigido: R$ {resultado.valorFuturo}
+            </Text>
+            <Text style={styles.resultadoTexto}>
+              Perda de Poder de Compra: R$ {resultado.perdaPoderCompra}
+            </Text>
+            <CustomButton title="Limpar" onPress={handleLimpar} />
           </View>
         )}
       </View>
@@ -78,29 +99,37 @@ export default function InflacaoForm() {
 }
 
 const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+  },
   form: {
     marginTop: 10,
   },
   label: {
     fontSize: 16,
     marginTop: 12,
+    color: colors.textSecondary,
+    fontWeight: '600',
   },
   input: {
-    borderWidth: 1,
-    borderColor: '#aaa',
-    borderRadius: 5,
-    padding: 8,
-    marginTop: 4,
+    backgroundColor: colors.inputBackground,
+    borderRadius: 8,
+    paddingHorizontal: 12,
+    paddingVertical: 10,
+    fontSize: 16,
+    color: colors.textSecondary,
+    marginTop: 6,
   },
   resultado: {
     marginTop: 20,
-    backgroundColor: '#fff3e6',
-    padding: 10,
-    borderRadius: 6,
+    backgroundColor: '#FFF0D4',
+    padding: 15,
+    borderRadius: 8,
   },
   resultadoTexto: {
-    fontSize: 16,
+    fontSize: 18,
     fontWeight: 'bold',
-    marginBottom: 4,
+    color: colors.primaryDark,
+    marginBottom: 6,
   },
 });

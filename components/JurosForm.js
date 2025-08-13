@@ -1,12 +1,22 @@
 import React, { useState } from 'react';
-import { View, Text, TextInput, Button, StyleSheet, KeyboardAvoidingView, Platform, Alert } from 'react-native';
+import {
+  View,
+  Text,
+  TextInput,
+  StyleSheet,
+  KeyboardAvoidingView,
+  Platform,
+  Alert,
+} from 'react-native';
 import { calcularJurosCompostos } from '../utils/calcularJuros';
+import CustomButton from './CustomButton';
+import { colors } from '../theme';
 
 export default function JurosForm() {
   const [valorInicial, setValorInicial] = useState('');
   const [taxaMensal, setTaxaMensal] = useState('');
   const [tempoMeses, setTempoMeses] = useState('');
-  const [aporteMensal, setAporteMensal] = useState('');  // Novo estado
+  const [aporteMensal, setAporteMensal] = useState('');
   const [resultado, setResultado] = useState(null);
 
   const handleCalcular = () => {
@@ -20,7 +30,12 @@ export default function JurosForm() {
     const tempo = parseInt(tempoMeses);
     const aporte = aporteMensal ? parseFloat(aporteMensal) : 0;
 
-    if (isNaN(vi) || isNaN(taxa) || isNaN(tempo) || (aporteMensal !== '' && isNaN(aporte))) {
+    if (
+      isNaN(vi) ||
+      isNaN(taxa) ||
+      isNaN(tempo) ||
+      (aporteMensal !== '' && isNaN(aporte))
+    ) {
       Alert.alert('Erro', 'Digite valores numéricos válidos.');
       return;
     }
@@ -33,12 +48,15 @@ export default function JurosForm() {
     setValorInicial('');
     setTaxaMensal('');
     setTempoMeses('');
-    setAporteMensal('');  // Limpar também aporte mensal
+    setAporteMensal('');
     setResultado(null);
   };
 
   return (
-    <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : undefined}>
+    <KeyboardAvoidingView
+      behavior={Platform.OS === 'ios' ? 'padding' : undefined}
+      style={styles.container}
+    >
       <View style={styles.form}>
         <Text style={styles.label}>Valor Inicial (R$):</Text>
         <TextInput
@@ -46,6 +64,8 @@ export default function JurosForm() {
           keyboardType="numeric"
           value={valorInicial}
           onChangeText={setValorInicial}
+          placeholder="Ex: 1000"
+          placeholderTextColor="#999"
         />
 
         <Text style={styles.label}>Taxa de Juros Mensal (%):</Text>
@@ -54,6 +74,8 @@ export default function JurosForm() {
           keyboardType="numeric"
           value={taxaMensal}
           onChangeText={setTaxaMensal}
+          placeholder="Ex: 1.5"
+          placeholderTextColor="#999"
         />
 
         <Text style={styles.label}>Tempo (meses):</Text>
@@ -62,6 +84,8 @@ export default function JurosForm() {
           keyboardType="numeric"
           value={tempoMeses}
           onChangeText={setTempoMeses}
+          placeholder="Ex: 12"
+          placeholderTextColor="#999"
         />
 
         <Text style={styles.label}>Aporte Mensal (R$) (Opcional):</Text>
@@ -70,18 +94,25 @@ export default function JurosForm() {
           keyboardType="numeric"
           value={aporteMensal}
           onChangeText={setAporteMensal}
-          placeholder="0"
+          placeholder="Ex: 100"
+          placeholderTextColor="#999"
         />
 
-        <Button title="Calcular" onPress={handleCalcular} />
+        <CustomButton title="Calcular" onPress={handleCalcular} />
 
         {resultado && (
           <View style={styles.resultado}>
-            <Text style={styles.resultadoTexto}>Valor Final: R$ {resultado.valorFinal}</Text>
-            <Text style={styles.resultadoTexto}>Juros Ganhos: R$ {resultado.jurosGanhos}</Text>
-            <View style={{ marginTop: 10 }}>
-              <Button title="Limpar" onPress={handleLimpar} color="#999" />
-            </View>
+            <Text style={styles.resultadoTexto}>
+              Valor Final: R$ {resultado.valorFinal}
+            </Text>
+            <Text style={styles.resultadoTexto}>
+              Juros Ganhos: R$ {resultado.jurosGanhos}
+            </Text>
+            <CustomButton
+              title="Limpar"
+              onPress={handleLimpar}
+              disabled={false}
+            />
           </View>
         )}
       </View>
@@ -90,29 +121,37 @@ export default function JurosForm() {
 }
 
 const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+  },
   form: {
     marginTop: 10,
   },
   label: {
     fontSize: 16,
     marginTop: 12,
+    color: colors.textSecondary,
+    fontWeight: '600',
   },
   input: {
-    borderWidth: 1,
-    borderColor: '#aaa',
-    borderRadius: 5,
-    padding: 8,
-    marginTop: 4,
+    backgroundColor: colors.inputBackground,
+    borderRadius: 8,
+    paddingHorizontal: 12,
+    paddingVertical: 10,
+    fontSize: 16,
+    color: colors.textSecondary,
+    marginTop: 6,
   },
   resultado: {
     marginTop: 20,
-    backgroundColor: '#e6f2ff',
-    padding: 10,
-    borderRadius: 6,
+    backgroundColor: '#E8DFFF',
+    padding: 15,
+    borderRadius: 8,
   },
   resultadoTexto: {
-    fontSize: 16,
+    fontSize: 18,
     fontWeight: 'bold',
-    marginBottom: 4,
+    color: colors.primaryDark,
+    marginBottom: 6,
   },
 });

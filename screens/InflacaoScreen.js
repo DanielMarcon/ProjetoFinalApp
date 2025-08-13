@@ -1,6 +1,7 @@
 import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import InflacaoForm from '../components/InflacaoForm';
+import { colors } from '../theme';
 
 export default function InflacaoScreen() {
   return (
@@ -14,10 +15,13 @@ export default function InflacaoScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    backgroundColor: colors.background,
     padding: 20,
   },
   title: {
-    fontSize: 20,
+    fontSize: 22,
+    fontWeight: 'bold',
     marginBottom: 20,
+    color: colors.textSecondary,
   },
 });
