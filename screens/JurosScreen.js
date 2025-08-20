@@ -3,11 +3,13 @@ import { View, Text, StyleSheet } from 'react-native';
 import JurosForm from '../components/JurosForm';
 import { colors } from '../theme';
 
-export default function JurosScreen() {
+export default function JurosScreen({ route }) {
+  const { saldoDisponivel } = route.params || { saldoDisponivel: 0 }; // padrão 0 para evitar erro
+
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Simulador de Juros Compostos</Text>
-      <JurosForm />
+      <Text style={styles.title}>Calculadora de Juros Compostos do Mubank</Text>
+      <JurosForm saldoDisponivel={saldoDisponivel} />
     </View>
   );
 }

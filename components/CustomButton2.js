@@ -2,14 +2,14 @@ import React from 'react';
 import { Pressable, Text, StyleSheet } from 'react-native';
 import { colors } from '../theme';
 
-export default function CustomButton({ title, onPress }) {
+export default function CustomButton2({ title, onPress }) {
   return (
     <Pressable
       onPress={onPress}
       style={({ pressed }) => [
         styles.button,
         {
-          borderColor: pressed ? colors.primaryDark : 'white',           // preto no normal, roxo escuro ao pressionar
+          borderColor: pressed ? colors.primaryDark : 'black',           // preto no normal, roxo escuro ao pressionar
           backgroundColor: pressed ? colors.primaryLight : 'transparent', // fundo roxo claro ao pressionar
           transform: [{ scale: pressed ? 0.95 : 1 }],
         },
@@ -20,7 +20,7 @@ export default function CustomButton({ title, onPress }) {
         <Text
           style={[
             styles.text,
-            { color: pressed ? colors.primaryDark : 'white' }, // texto preto no normal, roxo escuro ao pressionar
+            { color: pressed ? colors.primaryDark : 'black' }, // texto preto no normal, roxo escuro ao pressionar
           ]}
         >
           {title}

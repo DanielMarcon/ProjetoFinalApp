@@ -1,4 +1,3 @@
-// utils/calcularJuros.js
 export function calcularJurosCompostos(valorInicial, taxa, tempo, aporteMensal = 0) {
   const i = taxa / 100;
   const n = tempo;

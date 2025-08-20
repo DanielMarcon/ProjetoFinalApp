@@ -10,6 +10,7 @@ import {
 } from 'react-native';
 import { calcularInflacao } from '../utils/calcularInflacao';
 import CustomButton from './CustomButton';
+import CustomButton2 from './CustomButton2';
 import { colors } from '../theme';
 
 export default function InflacaoForm() {
@@ -80,7 +81,7 @@ export default function InflacaoForm() {
           placeholderTextColor="#999"
         />
 
-        <CustomButton title="Calcular" onPress={handleCalcular} />
+        <CustomButton2 title="Calcular" onPress={handleCalcular} />
 
         {resultado && (
           <View style={styles.resultado}>
@@ -90,7 +91,7 @@ export default function InflacaoForm() {
             <Text style={styles.resultadoTexto}>
               Perda de Poder de Compra: R$ {resultado.perdaPoderCompra}
             </Text>
-            <CustomButton title="Limpar" onPress={handleLimpar} />
+            <CustomButton2 title="Limpar" onPress={handleLimpar} />
           </View>
         )}
       </View>
@@ -122,7 +123,6 @@ const styles = StyleSheet.create({
   },
   resultado: {
     marginTop: 20,
-    backgroundColor: '#FFF0D4',
     padding: 15,
     borderRadius: 8,
   },

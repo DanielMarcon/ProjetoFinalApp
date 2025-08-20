@@ -6,7 +6,7 @@ import { colors } from '../theme';
 export default function InflacaoScreen() {
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Calculadora de Inflação</Text>
+      <Text style={styles.title}>Calculadora de Inflação do Mubank</Text>
       <InflacaoForm />
     </View>
   );
