@@ -9,8 +9,8 @@ export default function CustomButton({ title, onPress }) {
       style={({ pressed }) => [
         styles.button,
         {
-          borderColor: pressed ? colors.primaryDark : 'white',           // preto no normal, roxo escuro ao pressionar
-          backgroundColor: pressed ? colors.primaryLight : 'transparent', // fundo roxo claro ao pressionar
+          backgroundColor: pressed ? colors.primaryLight : colors.primaryDark,
+          borderColor: pressed ? colors.primaryLight : colors.primaryDark,
           transform: [{ scale: pressed ? 0.95 : 1 }],
         },
       ]}
@@ -20,7 +20,7 @@ export default function CustomButton({ title, onPress }) {
         <Text
           style={[
             styles.text,
-            { color: pressed ? colors.primaryDark : 'white' }, // texto preto no normal, roxo escuro ao pressionar
+            { color: pressed ? '#4B0082' : '#FFF' }, // texto branco normal, roxo escuro ao pressionar
           ]}
         >
           {title}
@@ -39,10 +39,15 @@ const styles = StyleSheet.create({
     marginVertical: 10,
     alignItems: 'center',
     justifyContent: 'center',
+    // sombra para dar profundidade
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 3 },
+    shadowOpacity: 0.3,
+    shadowRadius: 4,
+    elevation: 5,
   },
   text: {
     fontSize: 18,
     fontWeight: '600',
   },
 });
- 

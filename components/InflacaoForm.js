@@ -84,18 +84,33 @@ export default function InflacaoForm() {
         <CustomButton2 title="Calcular" onPress={handleCalcular} />
 
         {resultado && (
-          <View style={styles.resultado}>
-            <Text style={styles.resultadoTexto}>
-              Valor Futuro Corrigido: R$ {resultado.valorFuturo}
-            </Text>
-            <Text style={styles.resultadoTexto}>
-              Perda de Poder de Compra: R$ {resultado.perdaPoderCompra}
-            </Text>
-            <CustomButton2 title="Limpar" onPress={handleLimpar} />
-          </View>
-        )}
-      </View>
-    </KeyboardAvoidingView>
+  <View style={styles.resultadoContainer}>
+    <Text style={styles.resultadoTexto}>
+      Considerando o valor atual de{' '}
+      <Text style={styles.valorDestacado}>R$ {parseFloat(valorAtual).toFixed(2).replace('.', ',')}</Text>,{' '}
+      uma taxa de inflação anual de{' '}
+      <Text style={styles.valorDestacado}>{taxaInflacao.replace('.', ',')}%</Text>{' '}
+      ao longo de{' '}
+      <Text style={styles.valorDestacado}>{tempoAnos}</Text>{' '}
+      anos, o valor corrigido pela inflação será de{' '}
+      <Text style={styles.valorDestacado}>R$ {resultado.valorFuturo.replace('.', ',')}</Text>.
+    </Text>
+
+    <Text style={styles.resultadoTexto}>
+      Isso representa uma perda do poder de compra de{' '}
+      <Text style={styles.valorDestacado}>R$ {resultado.perdaPoderCompra.replace('.', ',')}</Text>{' '}
+      no período.
+    </Text>
+
+    <CustomButton2 title="Limpar" onPress={handleLimpar} />
+  </View>
+)}
+
+
+
+
+    </View>
+    </KeyboardAvoidingView >
   );
 }
 
@@ -132,4 +147,32 @@ const styles = StyleSheet.create({
     color: colors.primaryDark,
     marginBottom: 6,
   },
+  resultadoContainer: {
+  marginTop: 20,
+  backgroundColor: '#f0f4f8', // Fundo clarinho para o quadro
+  padding: 20,
+  borderRadius: 10,
+  borderWidth: 1,
+  borderColor: '#cbd5e1', // Borda suave
+  shadowColor: '#000',
+  shadowOffset: { width: 0, height: 2 },
+  shadowOpacity: 0.1,
+  shadowRadius: 4,
+  elevation: 3, // Para Android sombra
+},
+
+resultadoTexto: {
+  fontSize: 16,
+  fontWeight: '600',
+  color: colors.textSecondary || '#1e293b', // cor do texto principal (você pode ajustar)
+  marginBottom: 12,
+  textAlign: 'left',
+  lineHeight: 24,
+},
+
+valorDestacado: {
+  color: colors.primary || '#2563eb', // cor destacada, pode ser azul, verde, etc
+  fontWeight: '700',
+},
+
 });

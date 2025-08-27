@@ -107,18 +107,49 @@ export default function JurosForm({ saldoDisponivel }) {
         />
 
         <CustomButton2 title="Calcular" onPress={handleCalcular} />
-        
+
         {resultado && (
-          <View style={styles.resultado}>
-            <Text style={styles.resultadoTexto}>
-              Valor Futuro: R$ {resultado.valorFinal.replace('.', ',')}
-            </Text>
-            <Text style={styles.resultadoTexto}>
-              Juros Ganhos: R$ {resultado.jurosGanhos.replace('.', ',')}
-            </Text>
-            <CustomButton2 title="Limpar" onPress={handleLimpar} />
-          </View>
-        )}
+  <View style={styles.resultadoContainer}>
+    <Text style={styles.resultadoTexto}>
+      Investindo{' '}
+      <Text style={styles.valorDestacado}>
+        R$ {parseFloat(valorInicial).toFixed(2).replace('.', ',')}
+      </Text>
+      {aporteMensal ? (
+        <>
+          {' '}com aportes mensais de{' '}
+          <Text style={styles.valorDestacado}>
+            R$ {parseFloat(aporteMensal).toFixed(2).replace('.', ',')}
+          </Text>
+        </>
+      ) : null}{' '}
+      por <Text style={styles.valorDestacado}>{tempoMeses}</Text> meses à uma taxa de{' '}
+      <Text style={styles.valorDestacado}>{taxaMensal.replace('.', ',')}%</Text> ao mês,
+      você terá um total de{' '}
+      <Text style={styles.valorDestacado}>R$ {resultado.valorFinal.replace('.', ',')}</Text> ao final do período.
+    </Text>
+
+    <Text style={styles.resultadoTexto}>
+      Desse montante,{' '}
+      <Text style={styles.valorDestacado}>
+        R$ {resultado.jurosGanhos.replace('.', ',')}
+      </Text>{' '}
+      correspondem a juros ganhos.
+    </Text>
+
+    <Text style={styles.resultadoTexto}>
+      O total investido (capital inicial + aportes) será de{' '}
+      <Text style={styles.valorDestacado}>
+        R$ {(parseFloat(valorInicial) + (parseFloat(aporteMensal || 0) * parseInt(tempoMeses))).toFixed(2).replace('.', ',')}
+      </Text>.
+    </Text>
+
+    <CustomButton2 title="Limpar" onPress={handleLimpar} />
+  </View>
+)}
+
+
+
       </View>
     </KeyboardAvoidingView>
   );
@@ -160,4 +191,37 @@ const styles = StyleSheet.create({
     marginBottom: 6,
     textAlign: 'center',
   },
+  valorDestacado: {
+    color: colors.primary,
+    fontWeight: '700',
+  },
+  resultadoContainer: {
+  marginTop: 20,
+  backgroundColor: '#f0f4f8',
+  padding: 20,
+  borderRadius: 10,
+  borderWidth: 1,
+  borderColor: '#cbd5e1',
+  shadowColor: '#000',
+  shadowOffset: { width: 0, height: 2 },
+  shadowOpacity: 0.1,
+  shadowRadius: 4,
+  elevation: 3,
+},
+
+resultadoTexto: {
+  fontSize: 16,
+  fontWeight: '600',
+  color: colors.textSecondary || '#1e293b', 
+  marginBottom: 12,
+  textAlign: 'left',
+  lineHeight: 24,
+},
+
+valorDestacado: {
+  color: colors.primary || '#2563eb', 
+  fontWeight: '700',
+},
+
+
 });

@@ -1,7 +1,16 @@
 import React, { useState } from 'react';
 import { View, Text, StyleSheet, Modal, TextInput, TouchableOpacity, Alert } from 'react-native';
 import CustomButton from '../components/CustomButton';
-import { colors } from '../theme';
+
+const colors = {
+  primaryLight: '#EDE7F6',   // Lilás claro, mais sólido e menos transparente
+  primaryDark: '#2E0854',    // Roxo bem escuro para texto e bordas (quase preto)
+  depositGreen: '#3CB371',   // Verde médio mais vibrante (MediumSeaGreen)
+  depositBlue: '#1a99c0ff',   // Verde médio mais vibrante (MediumSeaGreen)
+  withdrawRed: '#D32F2F',    // Vermelho vibrante (Material Red 700)
+  white: '#FFFFFF',
+  placeholder: 'rgba(46, 8, 84, 0.6)', // roxo escuro translúcido para placeholder
+};
 
 export default function HomeScreen({ navigation }) {
   const [saldo, setSaldo] = useState(0);
@@ -47,16 +56,15 @@ export default function HomeScreen({ navigation }) {
         <Text style={styles.saldoLabel}>Saldo disponível</Text>
         <Text style={styles.saldoValor}>R$ {saldo.toFixed(2).replace('.', ',')}</Text>
         <View style={styles.buttonRow}>
-          <TouchableOpacity style={styles.actionButton} onPress={() => abrirModal('deposito')}>
-            <Text style={styles.actionButtonText}>Depósito</Text>
+          <TouchableOpacity style={styles.depositoButton} onPress={() => abrirModal('deposito')}>
+            <Text style={styles.depositoButtonText}>Depósito</Text>
           </TouchableOpacity>
-          <TouchableOpacity style={styles.actionButton} onPress={() => abrirModal('saque')}>
-            <Text style={styles.actionButtonText}>Saque</Text>
+          <TouchableOpacity style={styles.saqueButton} onPress={() => abrirModal('saque')}>
+            <Text style={styles.saqueButtonText}>Saque</Text>
           </TouchableOpacity>
         </View>
       </View>
 
-      {/* Passando saldoDisponivel para a tela de Juros */}
       <CustomButton
         title="Simulador de Juros Compostos"
         onPress={() => navigation.navigate('Juros', { saldoDisponivel: saldo })}
@@ -77,7 +85,7 @@ export default function HomeScreen({ navigation }) {
               style={styles.input}
               keyboardType="numeric"
               placeholder="Digite o valor"
-              placeholderTextColor={colors.textPrimary}
+              placeholderTextColor={colors.placeholder}
               value={valor}
               onChangeText={setValor}
               autoFocus
@@ -90,11 +98,11 @@ export default function HomeScreen({ navigation }) {
             )}
 
             <View style={styles.modalButtons}>
-              <TouchableOpacity style={styles.modalButton} onPress={confirmarOperacao}>
-                <Text style={styles.modalButtonText}>Confirmar</Text>
+              <TouchableOpacity style={styles.modalConfirmButton} onPress={confirmarOperacao}>
+                <Text style={styles.modalConfirmButtonText}>Confirmar</Text>
               </TouchableOpacity>
-              <TouchableOpacity style={styles.modalButtonCancel} onPress={() => setModalVisible(false)}>
-                <Text style={styles.modalButtonCancelText}>Cancelar</Text>
+              <TouchableOpacity style={styles.modalCancelButton} onPress={() => setModalVisible(false)}>
+                <Text style={styles.modalCancelButtonText}>Cancelar</Text>
               </TouchableOpacity>
             </View>
           </View>
@@ -107,129 +115,173 @@ export default function HomeScreen({ navigation }) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: colors.primary,
+    backgroundColor: colors.primaryLight,
     justifyContent: 'center',
     padding: 20,
   },
   title: {
     fontSize: 26,
-    color: colors.textPrimary,
+    color: colors.primaryDark,
     marginBottom: 30,
     textAlign: 'center',
     fontWeight: 'bold',
   },
   saldoContainer: {
-    backgroundColor: colors.primary,
-    borderColor: colors.textPrimary,
+    backgroundColor: colors.white,
+    borderColor: colors.primaryDark,
     borderWidth: 2,
     padding: 20,
     borderRadius: 12,
     marginBottom: 30,
+    shadowColor: colors.primaryDark,
+    shadowOffset: { width: 0, height: 3 },
+    shadowOpacity: 0.2,
+    shadowRadius: 5,
+    elevation: 5,
   },
   saldoLabel: {
     fontSize: 18,
-    color: colors.textPrimary,
+    color: colors.primaryDark,
     marginBottom: 6,
   },
   saldoValor: {
     fontSize: 28,
     fontWeight: 'bold',
-    color: colors.textPrimary,
+    color: colors.primaryDark,
     marginBottom: 15,
   },
   buttonRow: {
     flexDirection: 'row',
     justifyContent: 'space-between',
   },
-  actionButton: {
+  depositoButton: {
     flex: 1,
-    borderWidth: 2,
-    borderColor: colors.textPrimary,
+    backgroundColor: colors.depositGreen,
     borderRadius: 25,
-    paddingVertical: 10,
+    paddingVertical: 14,
     marginHorizontal: 5,
     alignItems: 'center',
     justifyContent: 'center',
+    shadowColor: colors.depositGreen,
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.8,
+    shadowRadius: 3,
+    elevation: 4,
   },
-  actionButtonText: {
-    color: colors.textPrimary,
+  saqueButton: {
+    flex: 1,
+    backgroundColor: colors.withdrawRed,
+    borderRadius: 25,
+    paddingVertical: 14,
+    marginHorizontal: 5,
+    alignItems: 'center',
+    justifyContent: 'center',
+    shadowColor: colors.withdrawRed,
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.8,
+    shadowRadius: 3,
+    elevation: 4,
+  },
+  depositoButtonText: {
+    color: colors.white,
+    fontWeight: 'bold',
+    fontSize: 16,
+  },
+  saqueButtonText: {
+    color: colors.white,
     fontWeight: 'bold',
     fontSize: 16,
   },
   modalOverlay: {
     flex: 1,
     justifyContent: 'center',
-    backgroundColor: 'rgba(0,0,0,0.5)',
+    backgroundColor: 'rgba(46,8,84,0.85)', // roxo escuro mais opaco para destaque do modal
     padding: 20,
   },
   modalContent: {
-    backgroundColor: colors.primary,
+    backgroundColor: colors.white,
     borderRadius: 12,
-    padding: 20,
-    borderWidth: 1,
-    borderColor: colors.textPrimary,
+    padding: 25,
+    borderWidth: 2,
+    borderColor: colors.primaryDark,
+    shadowColor: colors.primaryDark,
+    shadowOffset: { width: 0, height: 5 },
+    shadowOpacity: 0.3,
+    shadowRadius: 10,
+    elevation: 10,
   },
   modalTitle: {
-    fontSize: 20,
-    marginBottom: 15,
+    fontSize: 22,
+    marginBottom: 18,
     fontWeight: 'bold',
-    color: colors.textPrimary,
+    color: colors.primaryDark,
+    textAlign: 'center',
   },
   input: {
     borderWidth: 2,
-    borderColor: colors.textPrimary,
+    borderColor: colors.primaryDark,
     borderRadius: 12,
-    padding: 10,
-    fontSize: 18,
-    color: colors.textPrimary,
-    marginBottom: 20,
-    backgroundColor: 'rgba(241, 234, 234, 0.1)',
+    padding: 14,
+    fontSize: 20,
+    color: colors.primaryDark,
+    marginBottom: 25,
+    backgroundColor: '#F5F5F5',
   },
   sacarTudoButton: {
-    backgroundColor: colors.primary,
-    paddingVertical: 10,
+    backgroundColor: colors.depositBlue,
+    paddingVertical: 14,
     borderRadius: 25,
     alignItems: 'center',
-    marginBottom: 15,
-    borderWidth: 2,
-    borderColor: colors.textPrimary,
+    marginBottom: 20,
+    shadowColor: colors.depositBlue,
+    shadowOffset: { width: 0, height: 3 },
+    shadowOpacity: 0.7,
+    shadowRadius: 5,
+    elevation: 5,
   },
   sacarTudoButtonText: {
-    color: colors.textPrimary,
+    color: colors.white,
     fontWeight: 'bold',
-    fontSize: 16,
+    fontSize: 18,
   },
   modalButtons: {
     flexDirection: 'row',
     justifyContent: 'space-between',
   },
-  modalButton: {
+  modalConfirmButton: {
     flex: 1,
-    backgroundColor: colors.primary,
+    backgroundColor: colors.depositGreen,
     borderRadius: 25,
-    paddingVertical: 10,
+    paddingVertical: 14,
     marginHorizontal: 5,
     alignItems: 'center',
-    borderWidth: 2,
-    borderColor: colors.textPrimary,
+    shadowColor: colors.depositGreen,
+    shadowOffset: { width: 0, height: 3 },
+    shadowOpacity: 0.7,
+    shadowRadius: 5,
+    elevation: 5,
   },
-  modalButtonText: {
-    color: colors.textPrimary,
+  modalConfirmButtonText: {
+    color: colors.white,
     fontWeight: 'bold',
-    fontSize: 16,
+    fontSize: 18,
   },
-  modalButtonCancel: {
+  modalCancelButton: {
     flex: 1,
-    borderWidth: 2,
-    borderColor: colors.textPrimary,
+    backgroundColor: colors.withdrawRed,
     borderRadius: 25,
-    paddingVertical: 10,
+    paddingVertical: 14,
     marginHorizontal: 5,
     alignItems: 'center',
+    shadowColor: colors.withdrawRed,
+    shadowOffset: { width: 0, height: 3 },
+    shadowOpacity: 0.7,
+    shadowRadius: 5,
+    elevation: 5,
   },
-  modalButtonCancelText: {
-    color: colors.textPrimary,
+  modalCancelButtonText: {
+    color: colors.white,
     fontWeight: 'bold',
-    fontSize: 16,
+    fontSize: 18,
   },
 });
