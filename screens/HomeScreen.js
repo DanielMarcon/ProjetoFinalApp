@@ -3,13 +3,13 @@ import { View, Text, StyleSheet, Modal, TextInput, TouchableOpacity, Alert } fro
 import CustomButton from '../components/CustomButton';
 
 const colors = {
-  primaryLight: '#EDE7F6',   // Lilás claro, mais sólido e menos transparente
-  primaryDark: '#2E0854',    // Roxo bem escuro para texto e bordas (quase preto)
-  depositGreen: '#3CB371',   // Verde médio mais vibrante (MediumSeaGreen)
-  depositBlue: '#1a99c0ff',   // Verde médio mais vibrante (MediumSeaGreen)
-  withdrawRed: '#D32F2F',    // Vermelho vibrante (Material Red 700)
+  primaryLight: '#EDE7F6',   // Lilás claro
+  primaryDark: '#2E0854',    // Roxo escuro
+  depositGreen: '#3CB371',   // Verde médio
+  depositBlue: '#1a99c0ff',   // Azul médio
+  withdrawRed: '#D32F2F',    // Vermelho vibrante
   white: '#FFFFFF',
-  placeholder: 'rgba(46, 8, 84, 0.6)', // roxo escuro translúcido para placeholder
+  placeholder: 'rgba(46, 8, 84, 0.6)', // roxo escuro translúcido
 };
 
 export default function HomeScreen({ navigation }) {
