@@ -195,7 +195,7 @@ const styles = StyleSheet.create({
   modalOverlay: {
     flex: 1,
     justifyContent: 'center',
-    backgroundColor: 'rgba(46,8,84,0.85)', // roxo escuro mais opaco para destaque do modal
+    backgroundColor: 'rgba(46,8,84,0.85)', // roxo escuro mais opaco
     padding: 20,
   },
   modalContent: {
